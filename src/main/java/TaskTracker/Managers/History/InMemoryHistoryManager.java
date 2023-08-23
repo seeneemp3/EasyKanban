@@ -3,6 +3,7 @@ package TaskTracker.Managers.History;
 import TaskTracker.Tasks.Task;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class InMemoryHistoryManager implements HistoryManager {
     private final Map<Integer, Node<Task>> nodesMap = new HashMap<>();
@@ -30,6 +31,15 @@ public class InMemoryHistoryManager implements HistoryManager {
             linkedTaskList.removeNode(nodesMap.get(id));
             nodesMap.remove(id);
         }
+    }
+
+    @Override
+    public String toString() {
+        List<Task> history = getHistory();
+        return history.stream()
+                .map(Task::getId)
+                .map(String::valueOf)
+                .collect(Collectors.joining(","));
     }
 
     private static class CustomList <T extends Task>{

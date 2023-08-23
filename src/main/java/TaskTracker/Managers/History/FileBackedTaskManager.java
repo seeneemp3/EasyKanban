@@ -12,8 +12,6 @@ import java.io.*;
 import java.nio.charset.StandardCharsets;
 import java.util.*;
 
-import static TaskTracker.Utility.CSVConverter.historyToString;
-
 public class FileBackedTaskManager extends InMemoryTaskManager implements TaskManager {
 
     File filename;
@@ -28,16 +26,16 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         try (BufferedWriter buffWriter = new BufferedWriter( new FileWriter(filename, StandardCharsets.UTF_8,false))){
             buffWriter.write("id,type,name,status,description,localtime,duration,epic\n");
             for (Task t : tasks.values()){
-                buffWriter.write(CSVConverter.toString(t)+"\n");
+                buffWriter.write(t +"\n");
             }
             for (Task t : epics.values()){
-                buffWriter.write(CSVConverter.toString(t)+"\n");
+                buffWriter.write(t +"\n");
             }
             for (Task t : subtasks.values()){
-                buffWriter.write(CSVConverter.toString(t)+"\n");
+                buffWriter.write(t +"\n");
             }
 
-            buffWriter.write("History "+ historyToString(historyManager.getHistory()));
+            buffWriter.write("History "+ historyManager);
 
         }catch (IOException e){
             e.printStackTrace();
@@ -120,11 +118,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         save();
     }
 
-//    @Override
-//    public List<Epic> getAllEpics() {
-//        return super.getAllEpics();
-//    }
-
     @Override
     public void deleteAllEpics() {
         super.deleteAllEpics();
@@ -156,21 +149,11 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         save();
     }
 
-//    @Override
-//    public List<SubTask> getEpicsSubTasks(int epicId) {
-//        return super.getEpicsSubTasks(epicId);
-//    }
-
     @Override
     public void addSubTask(SubTask subTask) {
         super.addSubTask(subTask);
         save();
     }
-
-//    @Override
-//    public List<SubTask> getAllSubTasks() {
-//        return super.getAllSubTasks();
-//    }
 
     @Override
     public void deleteAllSubtasks() {
@@ -204,4 +187,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         super.updateTask(task);
         save();
     }
+
 }
+

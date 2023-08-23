@@ -19,8 +19,8 @@ import static TaskTracker.Managers.Managers.getGson;
 
 public class HTTPTaskManager extends FileBackedTaskManager {
     private String url;
-    private KVTaskClient client;
-    private Gson gson = getGson();
+    private final KVTaskClient client;
+    private final Gson gson = getGson();
 
     public HTTPTaskManager(String url) {
         this.client = new KVTaskClient(url);

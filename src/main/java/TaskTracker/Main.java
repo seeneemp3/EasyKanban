@@ -12,12 +12,10 @@ import java.util.Scanner;
 public class Main {
     public static void main(String[] args) throws IOException, InterruptedException {
 
-
-        var serv = new HttpTaskServer();
-        serv.start();
         var KVServ = new KVServer();
         KVServ.start();
-
+        var serv = new HttpTaskServer();
+        serv.start();
 
     }
 }

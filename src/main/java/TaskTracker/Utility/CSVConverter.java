@@ -33,12 +33,5 @@ public class CSVConverter {
             return new SubTask(id, name, description, status, epicId, startTime, duration);
         }
     }
-//    public static String historyToString(List<Task> taskHistory){
-//        return taskHistory.stream()
-//                .map(Task::getId)
-//                .map(String::valueOf)
-//                .collect(Collectors.joining(","));
-//    }
-
 
 }

@@ -1,18 +1,15 @@
 package TaskTracker.Http.Handlers;
 
 import TaskTracker.Managers.TaskManager;
-import TaskTracker.Tasks.SubTask;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.io.OutputStream;
 import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
-import java.util.logging.Handler;
 
 public class PrioritizedTasksHandler  implements HttpHandler {
     private final TaskManager taskManager;

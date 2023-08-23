@@ -4,15 +4,10 @@ import TaskTracker.Http.Handlers.*;
 import TaskTracker.Managers.Managers;
 import TaskTracker.Managers.TaskManager;
 import com.google.gson.Gson;
-import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpServer;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
-import java.util.HashMap;
-import java.util.Map;
-
-import static java.nio.charset.StandardCharsets.UTF_8;
 
 public class HttpTaskServer {
     public final static int PORT = 8080;

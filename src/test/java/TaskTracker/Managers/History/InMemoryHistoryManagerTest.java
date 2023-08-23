@@ -26,8 +26,8 @@ class InMemoryHistoryManagerTest {
     void getHistory() {
         assertEquals(0, him.getHistory().size(), "История не пустая");
         man.addTask(new Task("Task1", "some description", TaskStatus.NEW, LocalDateTime.now(),33));
-        man.addTask(new Task("Task2", "some description", TaskStatus.NEW, LocalDateTime.now(),32));
-        man.addTask(new Task("Task3", "some description", TaskStatus.DONE, LocalDateTime.now(),13));
+        man.addTask(new Task("Task2", "some description", TaskStatus.NEW, LocalDateTime.now().plusMinutes(60),32));
+        man.addTask(new Task("Task3", "some description", TaskStatus.DONE, LocalDateTime.now().plusMinutes(120),13));
         man.getTask(1);
         man.getTask(1);
         man.getTask(2);
@@ -45,11 +45,11 @@ class InMemoryHistoryManagerTest {
     @Test
     void remove() {
         man.addTask(new Task("Task5", "some description", TaskStatus.NEW, LocalDateTime.now(),32));
-        man.addTask(new Task("Task5", "some description", TaskStatus.NEW, LocalDateTime.now(),222));
+        man.addTask(new Task("Task5", "some description", TaskStatus.NEW, LocalDateTime.now().plusMinutes(60),222));
         man.addEpic(new Epic("Task7", "some description", null, null, 0 , null));
-        man.addEpic(new Epic("Task71", "some description", null, null, 0 , null));
-        man.addSubTask(new SubTask("Task8", "some description", TaskStatus.NEW, 3, LocalDateTime.now(),23));
-        man.addSubTask(new SubTask("Task81", "some description", TaskStatus.NEW, 3, LocalDateTime.now(),13));
+        man.addEpic(new Epic("Task71", "some descriptionn", null, null, 0 , null));
+        man.addSubTask(new SubTask("Task8", "some description", TaskStatus.NEW, 3, LocalDateTime.now().minusMinutes(120),23));
+        man.addSubTask(new SubTask("Task81", "some description", TaskStatus.NEW, 3, LocalDateTime.now().minusMinutes(240),13));
         man.getTask(1);
         man.getTask(2);
         man.getEpic(3);

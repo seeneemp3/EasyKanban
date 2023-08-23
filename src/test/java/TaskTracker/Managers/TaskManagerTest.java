@@ -73,7 +73,6 @@ public abstract class TaskManagerTest <T extends TaskManager>{
 
     @Test
     void addEpic() {
-        //man.addSubTask(subtask);
         man.addEpic(epic);
 
         final List<Epic> epics = man.getAllEpics();

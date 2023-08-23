@@ -253,11 +253,14 @@ public class InMemoryTaskManager implements TaskManager{
             LocalDateTime endTime = task.getEndTime();
             if (!prioritizedTasks.isEmpty()) {
                 for (Task taskTree : prioritizedTasks) {
+                    if(!(taskTree.getType() == TaskType.EPIC && taskTree.getStartTime() == null)){
                         if ((!taskTree.equals(task)) &&
-                                 (!( taskTree.getType() == TaskType.EPIC && ((Epic)taskTree).getSubtasksIds().contains(task.getId()))) &&
+                                (!( taskTree.getType() == TaskType.EPIC && ((Epic)taskTree).getSubtasksIds().contains(task.getId()))) &&
                                 !(startTime.isBefore(taskTree.getStartTime()) && endTime.isBefore(taskTree.getStartTime()) || startTime.isAfter(taskTree.getEndTime()) && endTime.isAfter(taskTree.getEndTime()))) {
                             throw new InsertTaskExeption("Задачи нельзя выполнять одновременно\n" + "задача " + taskTree.getName() + " пересекается с " + task.getName());
                         }
+                    }
+
                 }
             }
         }

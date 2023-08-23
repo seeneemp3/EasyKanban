@@ -19,6 +19,8 @@ public class KVServer {
     private final HttpServer server;
     private final Map<String, String> data = new HashMap<>();
 
+
+
     public KVServer() throws IOException {
         apiToken = generateApiToken();
         server = HttpServer.create(new InetSocketAddress("localhost", PORT), 0);
@@ -28,7 +30,6 @@ public class KVServer {
     }
 
     private void load(HttpExchange h) throws IOException {
-        // TODO Добавьте получение значения по ключу
         try (h) {
             System.out.println("\n/save");
             if (!hasAuth(h)) {
@@ -58,7 +59,6 @@ public class KVServer {
 
     private void save(HttpExchange h) throws IOException {
         try {
-            //System.out.println("\n/save");
             if (!hasAuth(h)) {
                 System.out.println("Запрос неавторизован, нужен параметр в query API_TOKEN со значением апи-ключа");
                 h.sendResponseHeaders(403, 0);
@@ -78,7 +78,6 @@ public class KVServer {
                     return;
                 }
                 data.put(key, value);
-                //System.out.println("Значение для ключа " + key + " успешно обновлено!");
                 h.sendResponseHeaders(200, 0);
             } else {
                 System.out.println("/save ждёт POST-запрос, а получил: " + h.getRequestMethod());
@@ -91,7 +90,6 @@ public class KVServer {
 
     private void register(HttpExchange h) throws IOException {
         try (h) {
-            //System.out.println("\n/register");
             if ("GET".equals(h.getRequestMethod())) {
                 sendText(h, apiToken);
             } else {
@@ -103,7 +101,6 @@ public class KVServer {
 
     public void start() {
         System.out.println("Запускаем сервер на порту " + PORT);
-        System.out.println("Открой в браузере http://localhost:" + PORT + "/");
         System.out.println("API_TOKEN: " + apiToken);
         server.start();
     }

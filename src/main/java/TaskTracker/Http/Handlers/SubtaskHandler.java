@@ -2,7 +2,6 @@ package TaskTracker.Http.Handlers;
 
 import TaskTracker.Managers.TaskManager;
 import TaskTracker.Tasks.SubTask;
-import TaskTracker.Tasks.Task;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;

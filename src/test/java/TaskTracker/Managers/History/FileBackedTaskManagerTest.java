@@ -4,7 +4,6 @@ import TaskTracker.Managers.TaskManagerTest;
 import TaskTracker.Tasks.Epic;
 import TaskTracker.Tasks.Task;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import java.io.File;
@@ -42,7 +41,6 @@ class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
         assertNotNull(tasks, "Вовращает пустой список");
         assertEquals(man.getTask(1), taskManager2.getTask(1), "Возращает неодинаковые задачи");
         assertEquals(1,tasks.size(), "Возвращает неверный список");
-        //assertNotNull(taskManager2.getPrioritizedTasks(),"Возвращает пустой список");
         assertEquals(man.historyManager.getHistory().size(),taskManager2.historyManager.getHistory().size(), "Возвращает неверную историю");
     }
 

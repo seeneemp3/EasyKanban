@@ -33,6 +33,11 @@ public class KVTaskClient {
             throw new RuntimeException(e);
         }
     }
+    public KVTaskClient(String url, String token){
+        httpClient = HttpClient.newHttpClient();
+        this.url = url;
+        this.token = token;
+    }
     public String load(String key) throws IOException, InterruptedException {
         if (key == null) return "null";
         uri = URI.create(url + "/load/" + key + "?API_TOKEN=" + token);
@@ -66,9 +71,7 @@ public class KVTaskClient {
                 .build();
         HttpResponse.BodyHandler<String> handler = HttpResponse.BodyHandlers.ofString();
         HttpResponse<String> response = httpClient.send(request, handler);
-        if (response.statusCode() == 200) {
-            //System.out.println("Код состояния " + response.statusCode());
-        } else {
+        if (response.statusCode() != 200) {
             throw new RuntimeException("Ошибка отправки запроса");
         }
     }

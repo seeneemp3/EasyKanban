@@ -60,15 +60,15 @@ public class TaskHandler implements HttpHandler {
         if (task.getId() != 0) {
             taskManager.updateTask(task);
             ex.sendResponseHeaders(200, 0);
-            writeResponse(ex,"Задача обновлена");
+            writeResponse(ex, "Task updated");
         } else {
             try {
                 taskManager.addTask(task);
                 ex.sendResponseHeaders(200, 0);
-                writeResponse(ex,"Задача добавлена");
+                writeResponse(ex, "Task added");
             }catch (Exception e){
                 ex.sendResponseHeaders(402, 0);
-                writeResponse(ex,"не удалось добавить");
+                writeResponse(ex, "Failed to add");
             }
         }
     }
@@ -78,12 +78,12 @@ public class TaskHandler implements HttpHandler {
         if(path.equals("/tasks/task/") && uri.getQuery() == null){
             taskManager.deleteAllTasks();
             ex.sendResponseHeaders(200, 0);
-            writeResponse(ex,"Все задачи удалены");
+            writeResponse(ex, "All tasks have been deleted");
         }else if ( uri.getQuery() != null){
             try {
                 taskManager.deleteTask(getIdUri(uri));
                 ex.sendResponseHeaders(200, 0);
-                writeResponse(ex,"Задача с ИД " + getIdUri(uri) + " удалена");
+                writeResponse(ex, "Task with ID " + getIdUri(uri) + " deleted");
             }catch (IllegalArgumentException e){
                 ex.sendResponseHeaders(401, 0);
                 writeResponse(ex, e.getMessage());

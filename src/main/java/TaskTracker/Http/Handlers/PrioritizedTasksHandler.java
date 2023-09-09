@@ -38,7 +38,7 @@ public class PrioritizedTasksHandler  implements HttpHandler {
             }
         } else {
             ex.sendResponseHeaders(401, 0);
-            writeResponse(ex, "Неверный метод запроса");
+            writeResponse(ex, "Invalid request method");
         }
 
 }

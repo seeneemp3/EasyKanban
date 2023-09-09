@@ -66,15 +66,15 @@ public class SubtaskHandler implements HttpHandler {
         if (task.getId() != 0) {
             taskManager.updateSubtask(task);
             ex.sendResponseHeaders(200, 0);
-            writeResponse(ex,"Подзадача обновлена");
+            writeResponse(ex, "Subtask updated");
         } else {
             try {
                 taskManager.addSubTask(task);
                 ex.sendResponseHeaders(200, 0);
-                writeResponse(ex, "Подзадача добавлена");
+                writeResponse(ex, "Subtask added");
             } catch (IllegalArgumentException e) {
                 ex.sendResponseHeaders(401, 0);
-                writeResponse(ex, "Подзадача не была добавлена");
+                writeResponse(ex, "Subtask was not added");
             }
         }
     }
@@ -84,12 +84,12 @@ public class SubtaskHandler implements HttpHandler {
         if (path.equals("/tasks/subtask/") && uri.getQuery() == null){
             taskManager.deleteAllSubtasks();
             ex.sendResponseHeaders(200, 0);
-            writeResponse(ex,"Все подзадачи удалены");
+            writeResponse(ex, "All subtasks have been deleted");
         }else if ( uri.getQuery() != null){
             try {
                 taskManager.deleteSubTask(getIdUri(uri));
                 ex.sendResponseHeaders(200, 0);
-                writeResponse(ex,"Задача с ИД " + getIdUri(uri) + " удалена");
+                writeResponse(ex, "Task with ID " + getIdUri(uri) + " deleted");
             }catch (IllegalArgumentException e){
                 ex.sendResponseHeaders(401, 0);
                 writeResponse(ex, e.getMessage());

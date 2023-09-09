@@ -62,7 +62,7 @@ public class EpicHandler implements HttpHandler {
             try{
                 taskManager.updateEpic(task);
                 ex.sendResponseHeaders(200, 0);
-                writeResponse(ex,"Эпик обновлен");
+                writeResponse(ex, "Epic updated");
             }catch (Exception e){
                 ex.sendResponseHeaders(400, 0);
                 writeResponse(ex, e.getMessage());
@@ -72,10 +72,10 @@ public class EpicHandler implements HttpHandler {
             try {
                 taskManager.addEpic(task);
                 ex.sendResponseHeaders(200, 0);
-                writeResponse(ex, "Эпик добавлен");
+                writeResponse(ex, "Epic added");
             } catch (IllegalArgumentException e) {
                 ex.sendResponseHeaders(401, 0);
-                writeResponse(ex, "Эпик не был добавлен");
+                writeResponse(ex, "Epic was not added");
             }
         }
     }
@@ -85,12 +85,12 @@ public class EpicHandler implements HttpHandler {
         if (path.equals("/tasks/epic/") && uri.getQuery() == null){
             taskManager.deleteAllEpics();
             ex.sendResponseHeaders(200, 0);
-            writeResponse(ex,"Все эпики удалены");
+            writeResponse(ex, "All epics have been deleted");
         }else if ( uri.getQuery() != null){
             try {
                 taskManager.deleteEpic(getIdUri(uri));
                 ex.sendResponseHeaders(200, 0);
-                writeResponse(ex,"Эпик с ИД " + getIdUri(uri) + " удален");
+                writeResponse(ex, "Epic with ID " + getIdUri(uri) + " deleted");
             }catch (IllegalArgumentException e){
                 ex.sendResponseHeaders(401, 0);
                 writeResponse(ex, e.getMessage());

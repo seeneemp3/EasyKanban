@@ -1,5 +1,5 @@
 # 📝EasyKanban📝
-EasyKanban is a backend application for managing task lists, resembling a Kanban board. It allows you to create, update, and delete entities such as tasks, epics, and subtasks. You can also view the task history and save all task data to a CSV file or a server.
+EasyKanban is a versatile backend application that simplifies task management. You can create tasks with specified types, statuses, start times, and durations, as well as organize them efficiently by sorting based on priority and time. It also supports the management of task lists, including tasks, epics, and subtasks, and provides a task history view and data saving to CSV files or a server.
 
 ## Goals
 - Apply core Java knowledge, including object-oriented programming and the collection API.
@@ -10,3 +10,4 @@ EasyKanban is a backend application for managing task lists, resembling a Kanban
 - Gson Library: For parsing JSON files.
 - JUnit 5: For testing.
 - Maven: For project build and management.
+- Postman: For testing requests.

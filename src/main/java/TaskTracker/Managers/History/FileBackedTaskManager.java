@@ -10,7 +10,9 @@ import TaskTracker.Utility.CSVConverter;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class FileBackedTaskManager extends InMemoryTaskManager implements TaskManager {
 
@@ -19,41 +21,43 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
     public FileBackedTaskManager(File filename) {
         this.filename = filename;
     }
-    public FileBackedTaskManager() {}
 
-    public void save (){
+    public FileBackedTaskManager() {
+    }
+
+    public void save() {
         final FileBackedTaskManager taskManager = new FileBackedTaskManager(filename);
-        try (BufferedWriter buffWriter = new BufferedWriter( new FileWriter(filename, StandardCharsets.UTF_8,false))){
+        try (BufferedWriter buffWriter = new BufferedWriter(new FileWriter(filename, StandardCharsets.UTF_8, false))) {
             buffWriter.write("id,type,name,status,description,localtime,duration,epic\n");
-            for (Task t : tasks.values()){
-                buffWriter.write(t +"\n");
+            for (Task t : tasks.values()) {
+                buffWriter.write(t + "\n");
             }
-            for (Task t : epics.values()){
-                buffWriter.write(t +"\n");
+            for (Task t : epics.values()) {
+                buffWriter.write(t + "\n");
             }
-            for (Task t : subtasks.values()){
-                buffWriter.write(t +"\n");
+            for (Task t : subtasks.values()) {
+                buffWriter.write(t + "\n");
             }
 
-            buffWriter.write("History "+ historyManager);
+            buffWriter.write("History " + historyManager);
 
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
-    public  FileBackedTaskManager readFromFile(){
+    public FileBackedTaskManager readFromFile() {
         final FileBackedTaskManager taskManager = new FileBackedTaskManager(filename);
         List<String> lines = new ArrayList<>();
 
-        try (BufferedReader bufferedReader = new BufferedReader( new FileReader(filename))){
-            while (bufferedReader.ready()){
+        try (BufferedReader bufferedReader = new BufferedReader(new FileReader(filename))) {
+            while (bufferedReader.ready()) {
                 lines.add(bufferedReader.readLine());
             }
-        }catch (IOException e){
+        } catch (IOException e) {
             e.printStackTrace();
         }
-        if(lines.isEmpty()) return taskManager;
+        if (lines.isEmpty()) return taskManager;
 
         for (int i = 1; i <= lines.size() - 2; i++) {
             String taskLine = lines.get(i);
@@ -66,14 +70,14 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
                 taskManager.subtasks.put(task.getId(), (SubTask) task);
             }
         }
-        if(!(lines.get(lines.size() - 1).substring(8).trim().equals(""))){
+        if (!(lines.get(lines.size() - 1).substring(8).trim().equals(""))) {
             Arrays.stream(lines.get(lines.size() - 1).substring(8).split(",")).forEach(id -> {
                         int parsedId = Integer.parseInt(id);
-                        if(tasks.containsKey(parsedId)){
+                        if (tasks.containsKey(parsedId)) {
                             historyManager.addTask(tasks.get(parsedId));
-                        } else if(epics.containsKey(parsedId)){
+                        } else if (epics.containsKey(parsedId)) {
                             historyManager.addTask(epics.get(parsedId));
-                        } else if(subtasks.containsKey(parsedId)) {
+                        } else if (subtasks.containsKey(parsedId)) {
                             historyManager.addTask(subtasks.get(parsedId));
                         }
                     }
@@ -179,7 +183,6 @@ public class FileBackedTaskManager extends InMemoryTaskManager implements TaskMa
         super.updateSubtask(subTask);
         save();
     }
-
 
 
     @Override

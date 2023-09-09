@@ -10,9 +10,7 @@ import static java.nio.charset.StandardCharsets.UTF_8;
         import com.sun.net.httpserver.HttpExchange;
         import com.sun.net.httpserver.HttpServer;
 
-/**
- * Постман: https://www.getpostman.com/collections/a83b61d9e1c81c10575c
- */
+
 public class KVServer {
     public static final int PORT = 8078;
     private final String apiToken;
@@ -33,24 +31,24 @@ public class KVServer {
         try (h) {
             System.out.println("\n/save");
             if (!hasAuth(h)) {
-                System.out.println("Запрос неавторизован, нужен параметр в query API_TOKEN со значением апи-ключа");
+                System.out.println("Unauthorized request, query parameter API_TOKEN with the API key value is required");
                 h.sendResponseHeaders(403, 0);
                 return;
             }
             if ("GET".equals(h.getRequestMethod())) {
                 String key = h.getRequestURI().getPath().substring("/save/".length());
                 if (key.isEmpty()) {
-                    System.out.println("Key для сохранения пустой. key указывается в пути: /save/{key}");
+                    System.out.println("Key for saving is empty. The key should be specified in the path: /save/{key}");
                     h.sendResponseHeaders(400, 0);
                     return;
                 }
                 if (data.containsKey(key)) {
                     String value = data.get(key);
                     sendText(h, value);
-                    System.out.println("Значение для ключа " + key + " получено!");
+                    System.out.println("Value for key " + key + " has been retrieved!");
                     h.sendResponseHeaders(200, 0);
                 } else {
-                    System.out.println("Значение для ключа " + key + " отсутствует!");
+                    System.out.println("Value for key " + key + " is missing!");
                     h.sendResponseHeaders(400, 0);
                 }
             }
@@ -60,27 +58,27 @@ public class KVServer {
     private void save(HttpExchange h) throws IOException {
         try {
             if (!hasAuth(h)) {
-                System.out.println("Запрос неавторизован, нужен параметр в query API_TOKEN со значением апи-ключа");
+                System.out.println("Unauthorized request, query parameter API_TOKEN with the API key value is required");
                 h.sendResponseHeaders(403, 0);
                 return;
             }
             if ("POST".equals(h.getRequestMethod())) {
                 String key = h.getRequestURI().getPath().substring("/save/".length());
                 if (key.isEmpty()) {
-                    System.out.println("Key для сохранения пустой. key указывается в пути: /save/{key}");
+                    System.out.println("The key for saving is empty. The key should be specified in the path: /save/{key}");
                     h.sendResponseHeaders(400, 0);
                     return;
                 }
                 String value = readText(h);
                 if (value.isEmpty()) {
-                    System.out.println("Value для сохранения пустой. value указывается в теле запроса");
+                    System.out.println("The value for saving is empty. The value should be specified in the request body.");
                     h.sendResponseHeaders(400, 0);
                     return;
                 }
                 data.put(key, value);
                 h.sendResponseHeaders(200, 0);
             } else {
-                System.out.println("/save ждёт POST-запрос, а получил: " + h.getRequestMethod());
+                System.out.println("/save expects a POST request, but received: " + h.getRequestMethod());
                 h.sendResponseHeaders(405, 0);
             }
         } finally {
@@ -93,14 +91,14 @@ public class KVServer {
             if ("GET".equals(h.getRequestMethod())) {
                 sendText(h, apiToken);
             } else {
-                System.out.println("/register ждёт GET-запрос, а получил " + h.getRequestMethod());
+                System.out.println("/register expects a GET request, but received " + h.getRequestMethod());
                 h.sendResponseHeaders(405, 0);
             }
         }
     }
 
     public void start() {
-        System.out.println("Запускаем сервер на порту " + PORT);
+        System.out.println("Starting the server on port " + PORT);
         System.out.println("API_TOKEN: " + apiToken);
         server.start();
     }

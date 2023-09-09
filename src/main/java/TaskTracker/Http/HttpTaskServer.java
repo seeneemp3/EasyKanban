@@ -12,8 +12,8 @@ import java.net.InetSocketAddress;
 public class HttpTaskServer {
     public final static int PORT = 8080;
     public Gson gson;
-    private HttpServer server;
     public TaskManager man;
+    private final HttpServer server;
 
 
     public HttpTaskServer() throws IOException {
@@ -28,11 +28,13 @@ public class HttpTaskServer {
     }
 
     public void start() {
-        System.out.println("Сервер запущен" );
+        System.out.println("Server started");
         server.start();
     }
+
     public void stop() {
-        System.out.println("Сервер остановлен" );
+        System.out.println("Server stopped");
         server.stop(1);
     }
+
 }

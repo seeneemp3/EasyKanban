@@ -2,7 +2,7 @@ package TaskTracker.Tasks;
 
 import java.time.LocalDateTime;
 
-public class SubTask extends Task{
+public class SubTask extends Task {
     protected int epicId;
 
     public SubTask(String name, String description, TaskStatus status, int epicId, LocalDateTime startTime, int duration) {
@@ -28,6 +28,6 @@ public class SubTask extends Task{
 
     @Override
     public String toString() {
-        return getId() + ","  + getType()+ "," + getName() + "," + getStatus() + "," + getDescription() + ","  + getId() + ","  + getStartTime() + "," + getDuration() ;
+        return getId() + "," + getType() + "," + getName() + "," + getStatus() + "," + getDescription() + "," + getId() + "," + getStartTime() + "," + getDuration();
     }
 }

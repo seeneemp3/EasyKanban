@@ -1,7 +1,6 @@
 package TaskTracker.Managers.History;
 
 import TaskTracker.Managers.TaskManagerTest;
-import TaskTracker.Tasks.Epic;
 import TaskTracker.Tasks.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -26,24 +25,23 @@ class FileBackedTaskManagerTest extends TaskManagerTest<FileBackedTaskManager> {
     }
 
     @Test
-    public void readFromFile(){
-        assertTrue(emptyManager.getAllTasks().isEmpty(), "Вовращает не пустой список");
+    public void readFromFile() {
+        assertTrue(emptyManager.getAllTasks().isEmpty(), "Returns a non-empty list");
 
         emptyManager = emptyManager.readFromFile();
-        assertTrue(emptyManager.getAllTasks().isEmpty(), "Вовращает не пустой список");
-        assertTrue(emptyManager.historyManager.getHistory().isEmpty(),"Возвращает не пустой список истории");
+        assertTrue(emptyManager.getAllTasks().isEmpty(), "Returns a non-empty list");
+        assertTrue(emptyManager.historyManager.getHistory().isEmpty(), "Returns a non-empty history list");
 
         man.addTask(task);
         man.getTask(1);
 
         FileBackedTaskManager taskManager2 = new FileBackedTaskManager(file).readFromFile();
         final List<Task> tasks = taskManager2.getAllTasks();
-        assertNotNull(tasks, "Вовращает пустой список");
-        assertEquals(man.getTask(1), taskManager2.getTask(1), "Возращает неодинаковые задачи");
-        assertEquals(1,tasks.size(), "Возвращает неверный список");
-        assertEquals(man.historyManager.getHistory().size(),taskManager2.historyManager.getHistory().size(), "Возвращает неверную историю");
+        assertNotNull(tasks, "Returns an empty list");
+        assertEquals(man.getTask(1), taskManager2.getTask(1), "Returns different tasks");
+        assertEquals(1, tasks.size(), "Returns an incorrect list");
+        assertEquals(man.historyManager.getHistory().size(), taskManager2.historyManager.getHistory().size(), "Returns incorrect history");
     }
-
 
 
 }

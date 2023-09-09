@@ -12,13 +12,14 @@ import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 
 public class KVTaskClient {
-    private HttpClient httpClient;
-    private String url;
-    private String token;
+    private final HttpClient httpClient;
+    private final String url;
+    private final String token;
     private URI uri;
-    public KVTaskClient (String url){
-       this.url = url;
-        try{
+
+    public KVTaskClient(String url) {
+        this.url = url;
+        try {
             httpClient = HttpClient.newHttpClient();
             HttpRequest req = HttpRequest.newBuilder()
                     .GET()
@@ -28,16 +29,18 @@ public class KVTaskClient {
             HttpResponse<String> res = httpClient.send(req, stringBodyHandler);
             if (res.statusCode() == 200) {
                 this.token = res.body();
-            }else throw new RuntimeException("no api key in response");
+            } else throw new RuntimeException("no api key in response");
         } catch (IOException | InterruptedException e) {
             throw new RuntimeException(e);
         }
     }
-    public KVTaskClient(String url, String token){
+
+    public KVTaskClient(String url, String token) {
         httpClient = HttpClient.newHttpClient();
         this.url = url;
         this.token = token;
     }
+
     public String load(String key) throws IOException, InterruptedException {
         if (key == null) return "null";
         uri = URI.create(url + "/load/" + key + "?API_TOKEN=" + token);
@@ -49,7 +52,7 @@ public class KVTaskClient {
         HttpResponse<String> res = httpClient.send(req, handler);
 
         String jstr = "";
-        if(res.statusCode() == 200){
+        if (res.statusCode() == 200) {
             JsonElement jel = JsonParser.parseString(res.body());
             if (jel.isJsonArray()) {
                 JsonArray jsonArray = jel.getAsJsonArray();
@@ -60,9 +63,11 @@ public class KVTaskClient {
                 jstr = jsonObject.toString();
             }
         } else {
-        throw new RuntimeException("Ошибка");
-    }return jstr;
+            throw new RuntimeException("Request sending error");
+        }
+        return jstr;
     }
+
     public void put(String key, String json) throws IOException, InterruptedException {
         uri = URI.create(url + "save/" + key + "?API_TOKEN=" + token);
         HttpRequest request = HttpRequest.newBuilder()
@@ -72,7 +77,7 @@ public class KVTaskClient {
         HttpResponse.BodyHandler<String> handler = HttpResponse.BodyHandlers.ofString();
         HttpResponse<String> response = httpClient.send(request, handler);
         if (response.statusCode() != 200) {
-            throw new RuntimeException("Ошибка отправки запроса");
+            throw new RuntimeException("Request sending error");
         }
     }
 }

@@ -21,6 +21,7 @@ public class Task {
         this.startTime = startTime;
         this.duration = duration;
     }
+
     public Task(int id, String name, String description, TaskStatus status, LocalDateTime startTime, int duration) {
         this.id = id;
         this.name = name;
@@ -94,6 +95,6 @@ public class Task {
 
     @Override
     public String toString() {
-        return getId() + "," + getType() + "," + getName() + "," + getStatus() + "," + getDescription()  + ","  + getStartTime() + "," + getDuration();
+        return getId() + "," + getType() + "," + getName() + "," + getStatus() + "," + getDescription() + "," + getStartTime() + "," + getDuration();
     }
 }

@@ -22,28 +22,23 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class HttpTests {
 
+    private final URI epicUri = URI.create("http://localhost:8080/tasks/epic/");
+    private final URI subtasksUri = URI.create("http://localhost:8080/tasks/subtask/");
+    private final URI taskUri = URI.create("http://localhost:8080/tasks/task/");
+    private final HttpClient client = HttpClient.newHttpClient();
+    public Gson gson;
+    HTTPTaskManager man;
+    KVServer kvServer;
+    HttpTaskServer httpTaskServer;
     private Task task;
     private Epic epic;
     private SubTask subTask1;
     private SubTask subTask2;
+    private String taskJson;
+    private String epicJson1;
+    private String subtaskJson1;
+    private String subtaskJson2;
 
-    private final URI epicUri = URI.create("http://localhost:8080/tasks/epic/");
-    private final URI subtasksUri = URI.create("http://localhost:8080/tasks/subtask/");
-    private final URI taskUri = URI.create("http://localhost:8080/tasks/task/");
-
-
-    private final HttpClient client = HttpClient.newHttpClient();
-    HTTPTaskManager man;
-    public Gson gson;
-
-
-    private  String taskJson;
-    private  String epicJson1;
-    private  String subtaskJson1;
-    private  String subtaskJson2;
-
-    KVServer kvServer;
-    HttpTaskServer httpTaskServer;
     @BeforeEach
     void start() throws IOException {
         kvServer = new KVServer();
@@ -52,20 +47,19 @@ public class HttpTests {
         httpTaskServer.start();
         gson = Managers.getGson();
         man = (HTTPTaskManager) httpTaskServer.man;
-
         init();
     }
 
 
-    void init(){
-         task = new Task( "task1", "Desc1", TaskStatus.NEW, LocalDateTime.of(2022, 6, 9, 3, 0),25);
-         epic = new Epic("epic1", "some description",TaskStatus.DONE, null, 0 , null);
-         subTask1 = new SubTask( "subtask1", "Desc1", TaskStatus.NEW, 2, LocalDateTime.of(2022, 6, 9, 5, 0), 2);
-         subTask2 = new SubTask( "subtask2", "Desc2", TaskStatus.NEW, 2, LocalDateTime.of(2022, 6, 9, 9, 0), 2);
-         taskJson = gson.toJson(task);
-         epicJson1 = gson.toJson(epic);
-         subtaskJson1 = gson.toJson(subTask1);
-         subtaskJson2 = gson.toJson(subTask2);
+    void init() {
+        task = new Task("task1", "Desc1", TaskStatus.NEW, LocalDateTime.of(2022, 6, 9, 3, 0), 25);
+        epic = new Epic("epic1", "some description", TaskStatus.DONE, null, 0, null);
+        subTask1 = new SubTask("subtask1", "Desc1", TaskStatus.NEW, 2, LocalDateTime.of(2022, 6, 9, 5, 0), 2);
+        subTask2 = new SubTask("subtask2", "Desc2", TaskStatus.NEW, 2, LocalDateTime.of(2022, 6, 9, 9, 0), 2);
+        taskJson = gson.toJson(task);
+        epicJson1 = gson.toJson(epic);
+        subtaskJson1 = gson.toJson(subTask1);
+        subtaskJson2 = gson.toJson(subTask2);
     }
 
     @Test

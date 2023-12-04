@@ -1,12 +1,12 @@
-package TaskTracker.Managers.History;
+package TaskTracker.manager.history;
 
-import TaskTracker.Managers.InMemoryTaskManager;
-import TaskTracker.Managers.TaskManager;
-import TaskTracker.Tasks.Epic;
-import TaskTracker.Tasks.SubTask;
-import TaskTracker.Tasks.Task;
-import TaskTracker.Tasks.TaskType;
-import TaskTracker.Utility.CSVConverter;
+import TaskTracker.manager.InMemoryTaskManager;
+import TaskTracker.manager.TaskManager;
+import TaskTracker.task.Epic;
+import TaskTracker.task.SubTask;
+import TaskTracker.task.Task;
+import TaskTracker.task.TaskType;
+import TaskTracker.utility.CSVConverter;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;

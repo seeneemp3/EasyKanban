@@ -1,4 +1,4 @@
-package TaskTracker.Managers;
+package TaskTracker.manager;
 
 import org.junit.jupiter.api.BeforeEach;
 

@@ -1,6 +1,6 @@
-package TaskTracker.Managers.History;
+package TaskTracker.manager.history;
 
-import TaskTracker.Tasks.Task;
+import TaskTracker.task.Task;
 
 import java.util.Objects;
 

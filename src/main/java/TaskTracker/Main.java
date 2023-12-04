@@ -1,7 +1,7 @@
 package TaskTracker;
 
-import TaskTracker.Http.HttpTaskServer;
-import TaskTracker.Http.KVServer;
+import TaskTracker.http.HttpTaskServer;
+import TaskTracker.http.KVServer;
 import java.io.IOException;
 
 public class Main {

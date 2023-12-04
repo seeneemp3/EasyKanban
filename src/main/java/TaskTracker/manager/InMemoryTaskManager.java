@@ -1,8 +1,8 @@
-package TaskTracker.Managers;
+package TaskTracker.manager;
 
-import TaskTracker.Managers.History.HistoryManager;
-import TaskTracker.TaskExeptions.InsertTaskExeption;
-import TaskTracker.Tasks.*;
+import TaskTracker.manager.history.HistoryManager;
+import TaskTracker.exception.InsertTaskExeption;
+import TaskTracker.task.*;
 
 import java.time.LocalDateTime;
 import java.util.*;

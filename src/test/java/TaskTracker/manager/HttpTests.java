@@ -1,12 +1,12 @@
-package TaskTracker.Managers;
+package TaskTracker.manager;
 
-import TaskTracker.Http.HTTPTaskManager;
-import TaskTracker.Http.HttpTaskServer;
-import TaskTracker.Http.KVServer;
-import TaskTracker.Tasks.Epic;
-import TaskTracker.Tasks.SubTask;
-import TaskTracker.Tasks.Task;
-import TaskTracker.Tasks.TaskStatus;
+import TaskTracker.http.HTTPTaskManager;
+import TaskTracker.http.HttpTaskServer;
+import TaskTracker.http.KVServer;
+import TaskTracker.task.Epic;
+import TaskTracker.task.SubTask;
+import TaskTracker.task.Task;
+import TaskTracker.task.TaskStatus;
 import com.google.gson.Gson;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

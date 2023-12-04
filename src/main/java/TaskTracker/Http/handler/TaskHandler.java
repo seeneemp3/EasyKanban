@@ -1,7 +1,7 @@
-package TaskTracker.Http.Handlers;
+package TaskTracker.http.handler;
 
-import TaskTracker.Managers.TaskManager;
-import TaskTracker.Tasks.Epic;
+import TaskTracker.manager.TaskManager;
+import TaskTracker.task.Task;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -13,13 +13,13 @@ import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-public class EpicHandler implements HttpHandler {
+public class TaskHandler implements HttpHandler {
     private final TaskManager taskManager;
     private final Gson gson;
     private static final Charset UTF = StandardCharsets.UTF_8;
 
 
-    public EpicHandler(TaskManager taskManager, Gson gson) {
+    public TaskHandler(TaskManager taskManager, Gson gson) {
         this.taskManager = taskManager;
         this.gson = gson;
     }
@@ -39,63 +39,55 @@ public class EpicHandler implements HttpHandler {
     private void requestGet(HttpExchange ex) throws IOException {
         URI uri = ex.getRequestURI();
         String path = uri.getPath();
-        if( path.equals("/tasks/epic/") && uri.getQuery() == null  ){
-            String res = gson.toJson(taskManager.getAllEpics());
+        if( path.equals("/tasks/task/") && uri.getQuery() == null  ){
+            String res = gson.toJson(taskManager.getAllTasks());
             ex.sendResponseHeaders(200, res.length());
             writeResponse(ex,res);
         }else if ( uri.getQuery() != null){
-            try {
-                String res = gson.toJson(taskManager.getEpic(getIdUri(uri)));
-                ex.sendResponseHeaders(200, 0);
-                writeResponse(ex, res);
-            } catch (IllegalArgumentException e) {
-                ex.sendResponseHeaders(401, 0);
-                writeResponse(ex, e.getMessage());
+            String res = gson.toJson(taskManager.getTask(getIdUri(uri)));
+            if (res.equals("null")) {
+                ex.sendResponseHeaders(400, 0);
+            }else {
+                ex.sendResponseHeaders(200, res.length());
             }
+            writeResponse(ex, res);
         }
     }
     private void requestPost(HttpExchange ex) throws IOException {
         InputStream is = ex.getRequestBody();
         String body = new String(is.readAllBytes(), UTF);
-        Epic task = gson.fromJson(body, Epic.class);
+        Task task = gson.fromJson(body, Task.class);
         if (task.getId() != 0) {
-            try{
-                taskManager.updateEpic(task);
-                ex.sendResponseHeaders(200, 0);
-                writeResponse(ex, "Epic updated");
-            }catch (Exception e){
-                ex.sendResponseHeaders(400, 0);
-                writeResponse(ex, e.getMessage());
-            }
-
+            taskManager.updateTask(task);
+            ex.sendResponseHeaders(200, 0);
+            writeResponse(ex, "Task updated");
         } else {
             try {
-                taskManager.addEpic(task);
+                taskManager.addTask(task);
                 ex.sendResponseHeaders(200, 0);
-                writeResponse(ex, "Epic added");
-            } catch (IllegalArgumentException e) {
-                ex.sendResponseHeaders(401, 0);
-                writeResponse(ex, "Epic was not added");
+                writeResponse(ex, "Task added");
+            }catch (Exception e){
+                ex.sendResponseHeaders(402, 0);
+                writeResponse(ex, "Failed to add");
             }
         }
     }
     private void requestDelete(HttpExchange ex) throws IOException {
         URI uri = ex.getRequestURI();
         String path = uri.getPath();
-        if (path.equals("/tasks/epic/") && uri.getQuery() == null){
-            taskManager.deleteAllEpics();
+        if(path.equals("/tasks/task/") && uri.getQuery() == null){
+            taskManager.deleteAllTasks();
             ex.sendResponseHeaders(200, 0);
-            writeResponse(ex, "All epics have been deleted");
+            writeResponse(ex, "All tasks have been deleted");
         }else if ( uri.getQuery() != null){
             try {
-                taskManager.deleteEpic(getIdUri(uri));
+                taskManager.deleteTask(getIdUri(uri));
                 ex.sendResponseHeaders(200, 0);
-                writeResponse(ex, "Epic with ID " + getIdUri(uri) + " deleted");
+                writeResponse(ex, "Task with ID " + getIdUri(uri) + " deleted");
             }catch (IllegalArgumentException e){
                 ex.sendResponseHeaders(401, 0);
                 writeResponse(ex, e.getMessage());
             }
-
         }
     }
     private int getIdUri(URI uri) {

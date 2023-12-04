@@ -1,8 +1,8 @@
-package TaskTracker.Http;
+package TaskTracker.http;
 
-import TaskTracker.Http.Handlers.*;
-import TaskTracker.Managers.Managers;
-import TaskTracker.Managers.TaskManager;
+import TaskTracker.http.handler.*;
+import TaskTracker.manager.Managers;
+import TaskTracker.manager.TaskManager;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpServer;
 

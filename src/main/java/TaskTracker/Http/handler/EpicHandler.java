@@ -1,7 +1,7 @@
-package TaskTracker.Http.Handlers;
+package TaskTracker.http.handler;
 
-import TaskTracker.Managers.TaskManager;
-import TaskTracker.Tasks.SubTask;
+import TaskTracker.manager.TaskManager;
+import TaskTracker.task.Epic;
 import com.google.gson.Gson;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
@@ -13,13 +13,13 @@ import java.net.URI;
 import java.nio.charset.Charset;
 import java.nio.charset.StandardCharsets;
 
-public class SubtaskHandler implements HttpHandler {
+public class EpicHandler implements HttpHandler {
     private final TaskManager taskManager;
     private final Gson gson;
     private static final Charset UTF = StandardCharsets.UTF_8;
 
 
-    public SubtaskHandler(TaskManager taskManager, Gson gson) {
+    public EpicHandler(TaskManager taskManager, Gson gson) {
         this.taskManager = taskManager;
         this.gson = gson;
     }
@@ -39,18 +39,13 @@ public class SubtaskHandler implements HttpHandler {
     private void requestGet(HttpExchange ex) throws IOException {
         URI uri = ex.getRequestURI();
         String path = uri.getPath();
-        if (path.equals("/tasks/subtask/epic/") && uri.getQuery() != null){
-            String res = gson.toJson(taskManager.getEpicsSubTasks(getIdUri(uri)));
-            ex.sendResponseHeaders(200, res.length());
-            writeResponse(ex,res);
-        }
-        if( path.equals("/tasks/subtask/") && uri.getQuery() == null  ){
-            String res = gson.toJson(taskManager.getAllSubTasks());
+        if( path.equals("/tasks/epic/") && uri.getQuery() == null  ){
+            String res = gson.toJson(taskManager.getAllEpics());
             ex.sendResponseHeaders(200, res.length());
             writeResponse(ex,res);
         }else if ( uri.getQuery() != null){
             try {
-                String res = gson.toJson(taskManager.getSubTask(getIdUri(uri)));
+                String res = gson.toJson(taskManager.getEpic(getIdUri(uri)));
                 ex.sendResponseHeaders(200, 0);
                 writeResponse(ex, res);
             } catch (IllegalArgumentException e) {
@@ -62,34 +57,40 @@ public class SubtaskHandler implements HttpHandler {
     private void requestPost(HttpExchange ex) throws IOException {
         InputStream is = ex.getRequestBody();
         String body = new String(is.readAllBytes(), UTF);
-        SubTask task = gson.fromJson(body, SubTask.class);
+        Epic task = gson.fromJson(body, Epic.class);
         if (task.getId() != 0) {
-            taskManager.updateSubtask(task);
-            ex.sendResponseHeaders(200, 0);
-            writeResponse(ex, "Subtask updated");
+            try{
+                taskManager.updateEpic(task);
+                ex.sendResponseHeaders(200, 0);
+                writeResponse(ex, "Epic updated");
+            }catch (Exception e){
+                ex.sendResponseHeaders(400, 0);
+                writeResponse(ex, e.getMessage());
+            }
+
         } else {
             try {
-                taskManager.addSubTask(task);
+                taskManager.addEpic(task);
                 ex.sendResponseHeaders(200, 0);
-                writeResponse(ex, "Subtask added");
+                writeResponse(ex, "Epic added");
             } catch (IllegalArgumentException e) {
                 ex.sendResponseHeaders(401, 0);
-                writeResponse(ex, "Subtask was not added");
+                writeResponse(ex, "Epic was not added");
             }
         }
     }
     private void requestDelete(HttpExchange ex) throws IOException {
         URI uri = ex.getRequestURI();
         String path = uri.getPath();
-        if (path.equals("/tasks/subtask/") && uri.getQuery() == null){
-            taskManager.deleteAllSubtasks();
+        if (path.equals("/tasks/epic/") && uri.getQuery() == null){
+            taskManager.deleteAllEpics();
             ex.sendResponseHeaders(200, 0);
-            writeResponse(ex, "All subtasks have been deleted");
+            writeResponse(ex, "All epics have been deleted");
         }else if ( uri.getQuery() != null){
             try {
-                taskManager.deleteSubTask(getIdUri(uri));
+                taskManager.deleteEpic(getIdUri(uri));
                 ex.sendResponseHeaders(200, 0);
-                writeResponse(ex, "Task with ID " + getIdUri(uri) + " deleted");
+                writeResponse(ex, "Epic with ID " + getIdUri(uri) + " deleted");
             }catch (IllegalArgumentException e){
                 ex.sendResponseHeaders(401, 0);
                 writeResponse(ex, e.getMessage());

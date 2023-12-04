@@ -1,10 +1,10 @@
-package TaskTracker.Managers;
+package TaskTracker.manager;
 
-import TaskTracker.Http.HTTPTaskManager;
-import TaskTracker.Http.LocalDateTimeTypeAdapter;
-import TaskTracker.Managers.History.FileBackedTaskManager;
-import TaskTracker.Managers.History.HistoryManager;
-import TaskTracker.Managers.History.InMemoryHistoryManager;
+import TaskTracker.http.HTTPTaskManager;
+import TaskTracker.http.LocalDateTimeTypeAdapter;
+import TaskTracker.manager.history.FileBackedTaskManager;
+import TaskTracker.manager.history.HistoryManager;
+import TaskTracker.manager.history.InMemoryHistoryManager;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 

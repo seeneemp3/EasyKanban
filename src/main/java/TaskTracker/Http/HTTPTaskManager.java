@@ -1,9 +1,9 @@
-package TaskTracker.Http;
+package TaskTracker.http;
 
-import TaskTracker.Managers.History.FileBackedTaskManager;
-import TaskTracker.Tasks.Epic;
-import TaskTracker.Tasks.SubTask;
-import TaskTracker.Tasks.Task;
+import TaskTracker.manager.history.FileBackedTaskManager;
+import TaskTracker.task.Epic;
+import TaskTracker.task.SubTask;
+import TaskTracker.task.Task;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -12,7 +12,7 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.stream.Collectors;
 
-import static TaskTracker.Managers.Managers.getGson;
+import static TaskTracker.manager.Managers.getGson;
 
 public class HTTPTaskManager extends FileBackedTaskManager {
     private final KVTaskClient client;

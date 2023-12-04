@@ -1,4 +1,4 @@
-package TaskTracker.Tasks;
+package TaskTracker.task;
 
 import java.time.LocalDateTime;
 

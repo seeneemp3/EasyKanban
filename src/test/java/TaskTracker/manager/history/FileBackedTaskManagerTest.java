@@ -1,7 +1,7 @@
-package TaskTracker.Managers.History;
+package TaskTracker.manager.history;
 
-import TaskTracker.Managers.TaskManagerTest;
-import TaskTracker.Tasks.Task;
+import TaskTracker.manager.TaskManagerTest;
+import TaskTracker.task.Task;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,6 @@
-package TaskTracker.Utility;
+package TaskTracker.utility;
 
-import TaskTracker.Tasks.*;
+import TaskTracker.task.*;
 
 import java.time.LocalDateTime;
 

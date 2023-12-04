@@ -1,10 +1,10 @@
-package TaskTracker.Managers.History;
+package TaskTracker.manager.history;
 
-import TaskTracker.Managers.InMemoryTaskManager;
-import TaskTracker.Tasks.Epic;
-import TaskTracker.Tasks.SubTask;
-import TaskTracker.Tasks.Task;
-import TaskTracker.Tasks.TaskStatus;
+import TaskTracker.manager.InMemoryTaskManager;
+import TaskTracker.task.Epic;
+import TaskTracker.task.SubTask;
+import TaskTracker.task.Task;
+import TaskTracker.task.TaskStatus;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

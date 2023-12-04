@@ -1,9 +1,9 @@
-package TaskTracker.Managers;
+package TaskTracker.manager;
 
-import TaskTracker.Tasks.Epic;
-import TaskTracker.Tasks.SubTask;
-import TaskTracker.Tasks.Task;
-import TaskTracker.Tasks.TaskStatus;
+import TaskTracker.task.Epic;
+import TaskTracker.task.SubTask;
+import TaskTracker.task.Task;
+import TaskTracker.task.TaskStatus;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDateTime;
